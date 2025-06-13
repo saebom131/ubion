@@ -1,0 +1,27 @@
+<01_pandas>
+- pandas(판다스) 라이브러리 기초
+- 파일 불러오기
+- 절대경로, 상대경로
+- head(), tail() 함수
+- 한글에러 해결 -> encoding = cp949, euc-kr
+- 결측치 확인 isna() 함수
+- 포함유무 any() 
+- 결측치 제거 dropna() 함수
+- 결측치 값 대체 fillna() 함수
+    - method = ffill / bfill
+- 데이터프레임 필터링
+    - loc : 인덱스 값 기준 
+    - iloc : 인덱스 위치 기준
+
+
+<02_corona>
+- 데이터프레임 특정 컬럼 제거 : drop() 함수
+    - axis 매개변수 : columns, rows
+- 행이나 열의 이름 변경 : rename()
+- 컬럼명 변경 : columns()
+- 데이터프레임의 정렬 변경 : sort()
+    - sort_index() : index의 값을 기준으로 정렬 변경
+    - sort_values() : 특정 컬럼의 값들을 기준으로 정렬 변경
+- 인덱스 초기화 함수 : reset_index()
+- 파생변수 생성
+- pop(), insert() 함수

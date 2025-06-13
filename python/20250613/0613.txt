@@ -1,0 +1,12 @@
+<dart.py 실행>
+--> cmd창에서
+
+C:\Users\toqha>cd C:\ubion\python\20250613
+
+C:\ubion\python\20250613>python dart.py
+검색할 종목 이름을 입력하시오: 한화오션
+
+DevTools listening on ws://127.0.0.1:61831/devtools/browser/a748e489-f5e4-42cd-96c6-22db2ce09b7c
+C:\ubion\python\20250613\dart.py:17: FutureWarning: Passing literal html to 'read_html' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df = pd.read_html(html_data)[0]
+한화오션.csv 파일 생성 완료

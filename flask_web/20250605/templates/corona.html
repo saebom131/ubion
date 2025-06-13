@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <!-- 데이터프레임에서 가장 최근 날짜 -> stateDt -->
+        {{statedt}}
+    </h3>
+    <!-- decidecnt의 값 대입 -->
+    <p>일일 확진자의 수는: {{decidecnt}}명</p>
+    <!-- deathcnt의 값 대입 -->
+    <p>일일 사망자의 수는: {{deathcnt}}명</p>
+    <!-- 표를 생성 -->
+    <table>
+        <!-- 행의 개수는 values의 길이만큼 + 1(컬럼의 이름) -->
+        <tr>
+            <th>No</th>
+            <!-- 컬럼명 -->
+            <!-- cols -> [col1, col2, col3] -->
+            {% for col in cols %}
+                <!-- 반복 실행 부분 : 열 생성 -->
+                <th>{{col}}</th>
+            {% endfor %}
+        </tr>
+        <!-- <tr>
+            <td>1</td>
+            <td>{{ values[0]['stateDt'] }}</td>
+            <td>{{ values[0]['일일확진자'] }}</td>
+            <td>{{ values[0]['일일사망자'] }}</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>{{ values[1]['stateDt'] }}</td>
+            <td>{{ values[1]['일일확진자'] }}</td>
+            <td>{{ values[1]['일일사망자'] }}</td>
+        </tr> -->
+        <!-- 반복문 이용해 행 생성 -->
+            <!-- No는 1씩 증가해서 생성 -->
+            <!-- cols의 개수만큼 반복해서 열 생성 -->
+        {% for value in values %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <!-- <td>{{ values['stateDt'] }}</td>
+                <td>{{ value['일일확진자'] }}</td>
+                <td>{{ value['일일사망자'] }}</td> -->
+                {% for col in cols %}
+                    <td>{{ values[col] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

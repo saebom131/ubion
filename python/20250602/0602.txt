@@ -1,0 +1,27 @@
+<01_dir_load>
+- 특정 경로의 파일 로드 함수
+- os 사용
+    - os.listdir(경로)
+- glob 사용
+    - glob(경로+파일유형)
+    - 1. print(glob("../../csv/2021/*.csv"))         # * -> 파일 이름 전체 & csv -> 확장자 csv
+    - 2. print(glob("../../csv/2021/202112_expense_list.*"))      # * -> 파일 이름 전체 & csv -> 확장자 csv
+    - '*.*' -> 파일 전체, 확장자 전체
+
+- os.path.split(file)
+    - 파일 경로 + 파일명 구분
+- os.path.splitext(파일명)
+    - split()되어 잘린 파일명 -> 순수 파일명 + 확장자 구분
+
+
+<data_load.py>
+- 모듈
+- 0602 01_dir_load파일 dir_load 함수 + 0530 dir_list파일 dir_data_df 함수
+- 데이터프레임에 불러온 파일 저장
+    - if문 사용 : 확장자명에 따라 다른 read_함수 사용
+    - try ~ except문 : 기본값(utf-8)으로 인코딩 -> 오류 발생 시 인코딩 기본값 engine(cp949)으로 인코딩
+- 불러온 데이터프레임(파일) 전역변수에 저장
+    - global()[파일명] = df.copy()
+
+
+Completed

@@ -1,0 +1,30 @@
+<01_dataframe>
+- 데이터프레임 결합
+- 유니언 결합
+    - concat()
+    - 매개변수
+        - axis : 0(행결합), 1(열결합)
+        - ignore_index: False(인덱스 보존), True(인덱스 초기화)
+- 조인 결합
+    - merge()
+    - 매개변수
+        - on : 결합할 기준 컬럼의 이름 (on, left_on, right_on)
+        - how : inner(공통 컬럼), left(왼쪽 df 기준), right(오른쪽 기준), outer(전체)
+- 인덱스 값 변경
+    - df.rename( index = {x : y}, inplace=True ) -> 인덱스 x를 y로 변경
+- 데이터프레임 인덱스 변경
+    - set_index
+    - (ex) df1.set_index('id', inplace=True)
+- 인덱스가 서로 다른 데이터일 때 단순 열결합
+    - 인덱스 초기화 후 결합
+    - pd.concat([df1.reset_index(), df2.reset_index()], axis=1)
+
+- 컬럼이 고유한 값인지 확인
+    - 1. 해당 컬럼의 유니크 값들 길이가 데이터프레임 인덱스 크기와 같다. => unique()
+    - 2. 해당 컬럼의 각 데이터의 개수가 모두 1개이다. => value_counts()
+
+- 특정 컬럼의 중복 데이터 확인
+    - shift() 함수 사용
+        - 전 행의 데이터와 같거나(or) 다음 행의 데이터와 같다면 -> 중복 데이터
+        - shift() & shift(-1)
+    - duplicated() 함수: 중복 데이터 확인 함수

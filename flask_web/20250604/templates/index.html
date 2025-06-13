@@ -1,0 +1,58 @@
+<!-- 기본구조 자동완성: ! + Enter -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 하이퍼링크: 누르면 다른 페이지로 이동 -->
+    <!-- 절대 경로 하이퍼링크 -->
+    <a href="http://www.google.com">google로 이동</a>
+    <a href="http://www.naver.com">naver로 이동</a>
+    <!-- 상대 경로 하이퍼링크 -->
+    <!-- 현재 위치(root)에서 이동 -->
+    <a href="/test">상대경로</a>
+
+    <h1>Get 방식 데이터 통신</h1>
+    <!-- form 태그를 이용해 유저가 입력한 데이터를 읽고 보냄 -->
+    <!-- form 태그 안에 유저가 입력할 공간 생성 필요 -->
+    <!-- 
+        action 속성: 데이터를 어디로 보낼 것인가
+        method 속성: 어떠한 방식으로 보낼 것인가
+    -->
+    <!-- 
+        유저가 입력할 수 있는 데이터의 공간은 2개
+        2개의 데이터를 로드해서
+        {input_id : 첫번째 입력공간에 유저가 입력한 데이터,
+        input_pass : 두번째 입력공간에 유저가 입력한 데이터}
+        root(127.0.0.1:5000)/send_get 주소에 get 방식으로 데이터 보냄
+    -->
+    <form action="/send_get" method="get">
+        <div>
+            <!-- div는 영역 태그 -->
+            <input type="text" name="input_id"/>
+        </div>
+        <div>
+            <input type="password" name="input_pass">
+        </div>
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+
+    <h1>Post 방식 데이터 통신</h1>
+    <form action="/send_post" method="post">
+        <div>
+            <!-- div는 영역 태그 -->
+            <input type="text" name="input_id"/>
+        </div>
+        <div>
+            <input type="password" name="input_pass">
+        </div>
+        <div>
+            <input type="submit">
+    </form>
+</body>
+</html>
