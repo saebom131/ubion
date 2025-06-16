@@ -1,0 +1,18 @@
+<01_card>
+- pandas 함수 작업
+- csv 파일 로드
+- 컬럼명 변경: columns(), rename()
+- 결측치 존재 유무 확인
+- 특정 컬럼 데이터 타입 시계열로 변경: to_datetime()
+- 데이터에서 '년도'만 추출 
+    - (1) map함수: x.strftime(%Y)
+    - (2) datetime 내장함수: dt.strftime('%Y)
+    - (3) datetime 변수: dt.year
+- 새로운 컬럼 생성, 연산
+- 그룹화
+    - groupby(), 그룹화연산 mean()
+    - pivot_table() 생성 
+        - 데이터프레임명
+        - index : 그룹화 기준
+        - values : 그룹화 연산할 컬럼명
+        - aggfunc : 그룹화 연산
