@@ -1,27 +1,94 @@
 <01_pandas>
 - pandas(판다스) 라이브러리 기초
-- 파일 불러오기
-- 절대경로, 상대경로
+- 외부의 데이터 파일 불러오기: read_xxx() 함수
+    - read_csv()
+        - csv, tsv 데이터 파일
+        - csv 데이터는 ','를 기준으로 나눔
+        - tsv 데이터는 '\t'을 기준으로 나눔 (매개변수 sep='\t' 대입)
+    - read_json()
+        - json 데이터 파일
+        - dict 형태의 파일
+    - read_xml()
+        - xml 데이터 파일
+        - html 구조 언어와 같이 tag 데이터 구성
+        - lxml 모듈 설치 필요한 경우 존재
+    - csv, json, xml의 공통 매개변수 
+        - encoding 매개변수, 기본값 'UTF-8'
+        - 한글 포함 파일은 종종 에러 발생 -> 'CP949', 'EUC-KR'로 인코딩
+    - read_excel()
+        - 엑셀 데이터 파일(.xls / .xlsx)
+        - 특정 엑셀 파일은 openpyxl 라이브러리 설치 필요한 경우 존재
+        - encoding 매개변수X
+
+- 파일의 경로
+    - 절대경로
+        1. \\ 역슬래쉬 2개 사용(이스케이프 문자 처리 문제 해결) : "C:\\ubion\\csv\\AAPL.csv"
+        2. 슬래쉬 / 사용: "C:/ubion/csv/AAPL.csv"
+        3. r(raw) 스트링 사용: r"C:\ubion\csv\AAPL.csv"
+    - 상대경로
+        - 현재 폴더를 기준으로 경로 지정
+
 - head(), tail() 함수
 - 한글에러 해결 -> encoding = cp949, euc-kr
-- 결측치 확인 isna() 함수
-- 포함유무 any() 
-- 결측치 제거 dropna() 함수
-- 결측치 값 대체 fillna() 함수
-    - method = ffill / bfill
+- 데이터프레임 생성: pd.DataFrame(data, columns)
+
+- 결측치
+    - 결측치는 비교연산자 '==' 사용X (np.nan == np.nan => 결과 항상 False)
+    - 결측치 유무 확인 isna() 함수
+        - 결측치면 True, 결측치 아니면 False
+    - 결측치 개수 확인  
+        1. 컬럼별 -> sum(df.isna().values), df.isna().sum()
+        2. 전체 -> sum(sum(df.isna().values)), df.isna().values.sum()
+        3. 행(row)별 -> df.isna().sum(axis=1)
+
+    - 포함 유무 any() 
+        - axis=0 : 포함 열 True, 포함X 열 False (기본값)
+        - axis=1 : 포함 행 True, 포함X 행 False
+    - 결측치 제거 dropna() 함수
+        -  axis 매개변수
+            - axis=0 : 결측치가 포함된 행 제거 (기본값)
+            - axis=1 : 결측치가 포함된 열 제거
+    - 결측치 값 대체 fillna() 함수
+        - method 매개변수
+            - "ffill" : 결측치를 앞 데이터로 채워준다.
+            - "bfill" : 결측치를 뒤 데이터로 채워준다.
+            - 앞 데이터, 뒤 데이터가 없다면 NaN 그대로 남아있음
 - 데이터프레임 필터링
     - loc : 인덱스 값 기준 
+        - df.loc[index, columns]
     - iloc : 인덱스 위치 기준
-
+        - df.iloc[index, columns]
+        - index, columns는 0:2의 형태로 원하는 행, 열 지정 가능
+    - 인덱스, 컬럼 선택 시
+        - ' ' 형태로 지정 -> Series
+        - [' '] 형태로 지정 -> DataFrame
 
 <02_corona>
 - 데이터프레임 특정 컬럼 제거 : drop() 함수
-    - axis 매개변수 : columns, rows
+    - 특정 컬럼을 버리고 나머지 컬럼만 선택(필터링)
+    - 여러 데이터 한번에 제거 -> 인자값에 대괄호 사용 (ex) drop( ['col1', 'col2'], axis=1 )
+    - axis 매개변수 
+        1. 'columns' 또는 1 -> 열제거
+        2. 'rows' 또는 0 -> 행제거
 - 행이나 열의 이름 변경 : rename()
+    - df.rename( columns = {기존컬럼명 : 변경할컬럼명} )
+    - 특정 컬럼명만 변경 가능, 변경 전 확인 가능
 - 컬럼명 변경 : columns()
+    - 전체 컬럼명 변경 시 유리
+    - df.columns = [변경할 컬럼명들]
 - 데이터프레임의 정렬 변경 : sort()
     - sort_index() : index의 값을 기준으로 정렬 변경
     - sort_values() : 특정 컬럼의 값들을 기준으로 정렬 변경
+        - ascending 매개변수
+            - True(기본값) -> 오름차순
+            - False -> 내림차순
 - 인덱스 초기화 함수 : reset_index()
+    - drop 매개변수
+        - True -> 기존 인덱스 버리고 새로 할당
+        - False(기본값) -> 기존 인덱스를 열로 추가하고 새로운 인덱스 생성 
 - 파생변수 생성
 - pop(), insert() 함수
+    - col = df.pop(컬럼명) 
+        -> df 데이터프레임에서 컬럼명의 데이터를 새로운 변수 col에 저장 후 df에서 삭제
+    - df.insert(n, 컬럼명, col)
+        -> col 데이터를 df 데이터프레임의 n번 인덱스에 삽입
