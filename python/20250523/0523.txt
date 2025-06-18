@@ -16,7 +16,7 @@
         - encoding 매개변수, 기본값 'UTF-8'
         - 한글 포함 파일은 종종 에러 발생 -> 'CP949', 'EUC-KR'로 인코딩
     - read_excel()
-        - 엑셀 데이터 파일(.xls / .xlsx)
+        - 엑셀 데이터 파일(.xls / .xlsx) 
         - 특정 엑셀 파일은 openpyxl 라이브러리 설치 필요한 경우 존재
         - encoding 매개변수X
 
