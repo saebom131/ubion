@@ -4,6 +4,16 @@ import invest.bollinger as boll
 import invest.halloween as hall
 import invest.momentum as mmt
 from datetime import datetime
+import yfinance as yf
+import pandas as pd
+
+# 야후파이낸스 라이브러리 이용해서 데이터 로드
+def load_data(_ticker, 
+              _start = '2010-01-01', 
+              _end = datetime.now()):
+    Ticker = yf.Ticker(_ticker)
+    result = Ticker.history(start = _start, end = _end)
+    return result
 
 # Quant 클래스 생성
 class Quant():
@@ -13,6 +23,16 @@ class Quant():
                  _start='2010-01-01', 
                  _end=datetime.now(), 
                  _col = 'Adj Close'):
+        if 'Date' in _df.columns:
+            _df.set_index('Date', inplace=True)
+        # 인덱스를 시계열로 변환하면서 tz 설정
+        _df.index = pd.to_datetime(_df.index, utc=True)
+        try:
+            # tz을 제거
+            _df.index = _df.index.tz_localize(None)
+        except Exception as e:
+            print(e)
+        
         self.df = _df
         self.start = _start
         self.end = _end
@@ -42,6 +62,6 @@ class Quant():
     def momentum(self, _momentum = 12, _score = 1):
         ym_df = mmt.create_YM(self.df, self.col)
         month_df = mmt.create_last_month(ym_df, self.start, self.end, _momentum)
-        df, acc_rtn = mmt.create_rtn(ym_df, month_df, _score)
+        df, acc_rtn = mmt.create_rtn(ym_df, month_df, self.start, self.end, _score)
         print(f'모멘텀 전략으로 최종 수익률은 {acc_rtn}')
         return df, acc_rtn

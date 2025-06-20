@@ -46,11 +46,16 @@ def create_last_month(
 	df = df.loc[_start : _end, ]
 	
 	return df
-def create_rtn(_df1, _df2, _score = 1):
+def create_rtn(
+		_df1, _df2, 
+		_start = '2010-01-01',
+		_end = datetime.now(),
+		_score = 1):
 	# 데이터프레임 복사본 생성
 	df = _df1.copy()
-	
-	# 거래 내역 컬럼 생성
+	df = df.loc[_start : _end, ]
+
+	# trade, rtn 컬럼 생성
 	df['trade'] = ''
 	df['rtn'] = 1
 	
