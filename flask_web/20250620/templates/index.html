@@ -169,9 +169,49 @@
     </main>
   </div>
 </div>
+
 <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+  <script>
+    // Graphs
+    const ctx = document.getElementById('myChart')
+    // eslint-disable-next-line no-unused-vars
+    const myChart = new Chart(ctx, {
+      // type -> 그래프 종류
+      type: 'line',
+      // data -> x축 y의 데이터를 입력하는 공간
+      data: {
+        // data 안에 있는 labels는 x축 데이터
+        labels: {{axis_x | tojson}},
+        // labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        // datasets y축의 데이터 -> 리스트 형태로 구성
+        // y축 데이터는 여러 개를 입력이 가능
+        datasets: [
+          // y축 데이터 1개 dict로 구성
+          {
+            // data y축 데이터
+            data: {{axis_y | tojson}},
+            // data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            boxPadding: 3
+          }
+        }
+      }
+    })
+  </script>
   </body>
 </html>
