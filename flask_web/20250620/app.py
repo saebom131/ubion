@@ -56,13 +56,15 @@ def dashboard():
     # get 방식으로 보낸 데이터는 request.args에 딕셔너리 형태로 존재
     input_code = request.args['code']
     input_start_time = f"{request.args['s_year']}-{request.args['s_month']}-{request.args['s_day']}"
+    input_end_time = f"{request.args['e_year']}-{request.args['e_month']}-{request.args['e_day']}"
+    
     input_kind = request.args['kind']
     # input_code를 이용해 파일을 로드
     # df = pd.read_csv(f'csv/{input_code}.csv')     # csv 파일로 로드
-    df = load_data(input_code, input_start_time)      # yfinance에서 로드
+    df = load_data(input_code, input_start_time, input_end_time)      # yfinance에서 로드
 
     # 클래스 생성
-    quant = Quant(df, _start = input_start_time, _col='Close')
+    quant = Quant(df, _start = input_start_time, _end = input_end_time, _col='Close')
     if input_kind == 'bnh':
         result, rtn = quant.buyandhold()
     elif input_kind == 'boll':
