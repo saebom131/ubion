@@ -24,10 +24,12 @@ class Quant():
         print(f'바이앤홀드 전략으로 최종 수익률은 {acc_rtn}')
         return df, acc_rtn
     
-    def bollinger(self, cnt = 20):
+    def bollinger(self, _cnt = 20):
         # cnt : 이동평균선에서 사용할 일자
-        band_df = boll.create_band(self.df, self.start, self.end, self.col, cnt)
+        band_df = boll.create_band(self.df, self.start, self.end, self.col, _cnt)
         trade_df = boll.create_trade(band_df)
+        # trade_df에 있는 trade 컬럼의 결측치를 ''로 채운다
+        trade_df['trade'].fillna('', inplace=True)
         df, acc_rtn = boll.create_rtn(trade_df)
         print(f'볼린저밴드 전략으로 최종 수익률은 {acc_rtn}')
         return df, acc_rtn
