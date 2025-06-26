@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jquery 라이브러리 로드(https://releases.jquery.com/ 에서 복사) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        // 페이지(html 문서)가 로드(준비)가 되었을때
+        $(document).ready(
+            // 페이지가 로드가 되면 뭔가 행동을 한다
+            function(){
+                // id가 game_start인 태그가 클릭되었을 때
+                $('#game_start').click(
+                    // 클릭되면 뭔가 행동을 한다
+                    function(){
+                        // input 태그들 중 name의 값이 user_select1인 태그를 선택
+                        // 선택된 태그의 value 확인해 변수에 대입
+                        let selected = $("input[name='user_select1']:checked").val()    
+                        // 확인 작업
+                        // 팝업창을 생성해 유저가 선택한 value 확인
+                        // alert(selected) // 선택한 value가 클릭되었는지 확인
+                        // 비동기식 통신
+                        // jquery 안에 ajax 함수 호출
+                        // 서버에게 데이터를 비동기 방식으로 보내는 행동
+                        $.ajax(
+                            // dict 형태로 데이터를 보내는 주소, 방법, 받는 데이터의 타입, 보내는 데이터 지정
+                            {
+                                url : '/game_result',
+                                method : 'get',
+                                dataType : 'json',
+                                data : {
+                                    'user_select' : selected
+                                }
+                            }
+                        ).then(
+                            // 데이터를 보낸 뒤 응답 메시지 받는 부분
+                            function(res){
+                                // res : 서버가 보낸 데이터
+                                // 확인
+                                // alert(res['result'])
+                                // res에는 user 키 값에는 유저의 데이터(_user)
+                                // res의 server 키 값에는 서버의 데이터(com_select)
+                                // res의 result 키 값에는 결과(reuslt)
+                                // id가 game_result인 태그를 선택해서
+                                // 태그를 추가(append)한다
+                                $("#game_result").append(
+                                    // 여러 줄 문자 -> ` (백틱) 사용
+                                    // ${} 형태로 변수값 삽입
+                                    `
+                                        <p>
+                                            유저 : ${res['user']},
+                                            컴퓨터 : ${res['server']},
+                                            결과 : ${res['result']}
+                                        </p>
+                                    `
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+        )
+    </script>
+</head>
+<body>
+    <h3>가위 바위 보 게임</h3>
+    <!-- 동기식 방식으로 데이터 전송 -> form 태그 사용 -->
+    <h5>동기식 통신</h5>
+    <form action="/game" method="get">
+        <!-- 유저가 선택할 수 있는 공간 -->
+        <div>
+            <input type="radio" name="user_select" value="가위">
+            <label>가위</label>
+        </div>
+        <div>
+            <input type="radio" name="user_select" value="바위">
+            <label>바위</label>
+        </div>
+        <div>
+            <input type="radio" name="user_select" value="보">
+            <label>보</label>
+        </div>
+        <input type="submit" value="게임 시작">
+    </form>
+
+    <!-- 비동기식 방식으로 통신 -->
+    <h5>비동기식 통신</h5>
+    <!-- 유저가 선택할 수 있는 공간 -->
+    <div>
+        <input type="radio" name="user_select1" value="가위">
+        <label>가위</label>
+    </div>
+    <div>
+        <input type="radio" name="user_select1" value="바위">
+        <label>바위</label>
+    </div>
+    <div>
+        <input type="radio" name="user_select1" value="보">
+        <label>보</label>
+    </div>
+    <button id = 'game_start'>게임 시작</button>  
+    <!-- 게임의 결과를 출력하는 공간 생성 -->
+    <div id="game_result"></div>
+
+</body>
+</html>
